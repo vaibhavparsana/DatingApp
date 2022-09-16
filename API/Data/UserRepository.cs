@@ -22,6 +22,9 @@ namespace API.Data
 
         public async Task<MemberDto> GetMemberAsync(string username)
         {
+            Console.WriteLine("username:" + username);
+            var temp = await _context.User.Where(x => x.UserName == username).SingleOrDefaultAsync();
+            Console.WriteLine("temp:", temp);
             return await _context.User
                 .Where(x => x.UserName == username)
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
@@ -30,7 +33,7 @@ namespace API.Data
 
         public async Task<IEnumerable<MemberDto>> GetMembersAsync()
         {
-            return await _context.User 
+            return await _context.User
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
